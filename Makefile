@@ -1,9 +1,9 @@
 OUT=parser
-SRC=main.cpp
-CC=g++
+SRC=main.c
+CC=gcc
 DB=gdb
 JUDGE_O=-O2
-JUDGE_FLAGS=-Wall -Werror -Wformat-security -Wignored-qualifiers -Winit-self -Wswitch-default -Wfloat-equal -Wpointer-arith -Wtype-limits -Wempty-body -Wno-logical-op -Wmissing-field-initializers -Wno-unused-result -std=c++11 -lm
+JUDGE_FLAGS=-Wall -Werror -Wformat-security -Wignored-qualifiers -Winit-self -Wswitch-default -Wfloat-equal -Wpointer-arith -Wtype-limits -Wempty-body -Wno-logical-op -Wstrict-prototypes -Wold-style-declaration -Wold-style-definition -Wmissing-parameter-type -Wmissing-field-initializers -Wnested-externs -Wno-pointer-sign -Wno-unused-result -std=gnu99 -lm
 MY_FLAGS=-Wextra
 
 default: $(SRC)

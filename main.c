@@ -25,7 +25,7 @@ int main(int argc, char **argv) {
     }
 
     // choosing options
-    const int OPTION_NUM = 2;
+    #define OPTION_NUM 2
     const char *OPTION_NAMES[OPTION_NUM] = {"Fix names", "Delete all comments"};
     int options[OPTION_NUM] = {};
     int ans = 0;
@@ -57,6 +57,7 @@ int main(int argc, char **argv) {
             tmpOut = tmpfile();
         }
     fclose (tmpOut);
+    #undef OPTION_NUM
 
     // saving the result
     FILE *out = fopen(argv[2], "w");

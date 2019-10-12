@@ -6,11 +6,12 @@
 
 // some defines
 typedef void (*FileFunc) (FILE *, FILE *);
-const int MAX_WORD = 512;
-const int LINE_COMMENT_TYPE = 0,
-          LONG_COMMENT_TYPE = 1,
-          SYMBOL_TYPE = 2,
-          STRING_TYPE = 3;
+#define MAX_WORD 512
+#define LINE_COMMENT_TYPE 0
+#define LONG_COMMENT_TYPE 1
+#define SYMBOL_TYPE 2
+#define STRING_TYPE 3
+
 #define DO_NOTHING
 
 // utility.c
