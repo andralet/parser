@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
+#include <string.h>
 
 // some defines
 typedef void (*FileFunc) (FILE *, FILE *);
@@ -19,6 +20,7 @@ const int LINE_COMMENT_TYPE = 0,
 
 // operations.c
     void FixCase(FILE *in, FILE *out);
+    void DeleteComments(FILE *in, FILE *out);
 
 // other files
 #include "utility.c"

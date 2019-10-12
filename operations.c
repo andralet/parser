@@ -19,3 +19,33 @@ void FixCase(FILE *in, FILE *out) {
         }
     }
 }
+
+void DeleteComments(FILE *in, FILE *out) {
+    char cPrev = fgetc(in);
+    char c = fgetc(in);
+    
+    while (c != EOF) {
+        if (cPrev == '/') {
+            if (c == '/') {
+                cPrev = GoToSymbol(in, out, '\n', 0);
+                c = fgetc(in);
+                continue;
+            }
+            else if (c == '*') {
+                do {
+                    cPrev = GoToSymbol(in, out, '*', 0);
+                    c = fgetc(in);
+                } while (c != '/' && c != EOF);
+                cPrev = fgetc(in);
+                c = fgetc(in);
+                continue;
+            }
+        }
+        fputc(cPrev, out);
+        cPrev = c;
+        c = fgetc(in);
+    }
+
+    if (cPrev != EOF)
+        fputc(cPrev, out);
+}

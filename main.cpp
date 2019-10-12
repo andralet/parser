@@ -6,18 +6,27 @@ int main(int argc, char **argv) {
         return 1;
     }
 
+    if (strcmp(argv[1], argv[2]) == 0) {
+        printf("Are you sure you want to use the same file name? You won't be able to recover your old data.\n");
+        char ans = 0;
+        printf("y/n: ");
+        while (tolower(ans) != 'y' && tolower(ans) != 'n')
+            scanf("%c", &ans);
+        if (tolower(ans) == 'n') {
+            printf("Parsing canceled.\n");
+            return 0;
+        }
+    }
+
     FILE *in = fopen(argv[1], "r");
-    FILE *out = fopen(argv[2], "w");
-    if (!in || !out) {
-        if (!in)
-            printf("Could not open input file '%s' for reading\n", argv[1]);
-        if (!out)
-            printf("Could not open output file '%s' for writing\n", argv[2]);
+    if (!in) {
+        printf("Could not open input file '%s' for reading\n", argv[1]);
         return 2;
     }
 
-    const int OPTION_NUM = 1;
-    const char *OPTION_NAMES[OPTION_NUM] = {"Fix names"};
+    // choosing options
+    const int OPTION_NUM = 2;
+    const char *OPTION_NAMES[OPTION_NUM] = {"Fix names", "Delete all comments"};
     int options[OPTION_NUM] = {};
     int ans = 0;
     do {
@@ -36,12 +45,29 @@ int main(int argc, char **argv) {
         }
     } while (ans >= 0);
 
-    const FileFunc OPTION_FUNC[OPTION_NUM] = {FixCase};
+    // working on files
+    const FileFunc OPTION_FUNC[OPTION_NUM] = {FixCase, DeleteComments};
+    FILE *tmpOut = tmpfile();
     for (int i = 0; i < OPTION_NUM; i++)
         if (options[i]) {
-            (*OPTION_FUNC[i])(in, out);
+            (*OPTION_FUNC[i])(in, tmpOut);
+            fclose(in);
+            in = tmpOut;
+            rewind(in);
+            tmpOut = tmpfile();
         }
+    fclose (tmpOut);
 
+    // saving the result
+    FILE *out = fopen(argv[2], "w");
+    if (!out) {
+        printf("Could not open output file '%s' for writing\n", argv[2]);
+        printf("No changes saved.\n");
+        return 3;
+    }
+    GoToSymbol(in, out, EOF, 1);
     printf("Done\n");
+    fclose(out);
+
     return 0;
 }
