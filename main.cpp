@@ -25,8 +25,8 @@ int main(int argc, char **argv) {
     }
 
     // choosing options
-    const int OPTION_NUM = 1;
-    const char *OPTION_NAMES[OPTION_NUM] = {"Fix names"};
+    const int OPTION_NUM = 2;
+    const char *OPTION_NAMES[OPTION_NUM] = {"Fix names", "Delete all comments"};
     int options[OPTION_NUM] = {};
     int ans = 0;
     do {
@@ -46,7 +46,7 @@ int main(int argc, char **argv) {
     } while (ans >= 0);
 
     // working on files
-    const FileFunc OPTION_FUNC[OPTION_NUM] = {FixCase};
+    const FileFunc OPTION_FUNC[OPTION_NUM] = {FixCase, DeleteComments};
     FILE *tmpOut = tmpfile();
     for (int i = 0; i < OPTION_NUM; i++)
         if (options[i]) {
