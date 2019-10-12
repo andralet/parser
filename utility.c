@@ -1,7 +1,7 @@
 int FilterName(FILE *in, FILE *out, char *word) {
     int i = 0;
     char c = 0, cPrev = 0;
-    while (!isalpha(c = fgetc(in))) {
+    while (!isalpha(c = fgetc(in)) && c != '_') {
         if (c == EOF)
             return 0;
         fputc(c, out);
@@ -27,7 +27,7 @@ int FilterName(FILE *in, FILE *out, char *word) {
     i++;
     while (i < MAX_WORD - 1) {
         c = fgetc(in);
-        if (!isalpha(c)) {
+        if (!isalpha(c) && c != '_') {
             ungetc(c, in);
             break;
         }
